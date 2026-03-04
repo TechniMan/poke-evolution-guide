@@ -1,12 +1,16 @@
-import { EvolutionClient } from 'pokenode-ts'
+import { EvolutionClient, GameClient } from 'pokenode-ts'
+import type { Pokedex } from 'pokenode-ts'
 import Anchor from './ui/Anchor'
 
 import EvolutionCard from '@/app/ui/EvolutionCard'
 
 export default async function Home() {
-  const pokedexList = []
+  const pokedexList: Pokedex[] = []
+  const gameClient = new GameClient()
+  pokedexList.push(await gameClient.getPokedexByName('letsgo-kanto'))
 
   const evolutionApi = new EvolutionClient()
+  // limit to first 78 chains while we work with the letsgo-kanto pokedex
   const evolutionChains = await evolutionApi.listEvolutionChains(0, 78)
 
   return (
@@ -16,20 +20,24 @@ export default async function Home() {
       </header>
 
       <div className='w-full bg-slate-950'>
-        Filter by Pokedex: todo
-        {/* TODO filter by pokedex/game */}
+        (todo) Filter by Pokedex:&nbsp;
+        {pokedexList.map((pokedex) => (
+          <span key={pokedex.name}>
+            {pokedex.name}
+          </span>
+        ))}
       </div>
       <div className='w-full bg-slate-950'>
-        Show/hide completed: todo
-        {/* TODO filter completed hidden/shown */}
+        {/* (todo) Show/hide completed: */}
       </div>
 
       <main className='w-full bg-slate-900 overflow-y-scroll'>
-        <div className='flex flex-wrap'>
+        <div className='flex flex-wrap gap-4 p-4 justify-center'>
           {evolutionChains.results.map((chain) => (
             <EvolutionCard
               key={chain.url}
               chainId={parseInt(chain.url.split('/')[6])}
+              pokedex={pokedexList[0]}
             />
           ))}
         </div>

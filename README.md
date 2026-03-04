@@ -1,6 +1,17 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Pokemon Evolution Guide
 
-## Getting Started
+This is a simple webpage to help you see, at a glance, what you need to do in order to evolve Pokemon to complete your Pokedex. I was frustrated to no end as a child when I learned that some Pokemon I'd spent hours trying to evolve through grinding levels required trading with friends. Now I'm playing some of those games again, I wanted a way to easily see which Pokemon are safe to level up and which are not.
+
+I also decided to build this as a way to learn React and Next.js, so it might not fit best practices for those but I've learnt a lot by getting stuck into it.
+
+## To-dos
+
+* Host it somewhere (Vercel?)
+* Add a filter by Pokedex/Game/Generation (whichever is most relevant to the PokeAPI data)
+* Add ability to mark evolutions as 'complete', stored in local storage
+* 
+
+## To run it yourself
 
 First, run the development server:
 
@@ -9,22 +20,3 @@ npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

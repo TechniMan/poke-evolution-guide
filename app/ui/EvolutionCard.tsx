@@ -1,8 +1,11 @@
 import { EvolutionClient, PokemonClient } from 'pokenode-ts'
-import type { ChainLink } from 'pokenode-ts'
+import type { ChainLink, Pokedex } from 'pokenode-ts'
 
-function UppifyName(name: string) {
-  return `${name[0].toUpperCase()}${name.substring(1)}`
+function CapitaliseWord(word: string): string {
+  return `${word[0].toUpperCase()}${word.substring(1)}`
+}
+function PrettifyName(name: string): string {
+  return name.split('-').reduce((acc, val) => `${acc}${CapitaliseWord(val)} `, '')
 }
 
 function EvolutionDetailComponent({ trigger, detail }: { trigger: string, detail: string }) {
@@ -26,7 +29,8 @@ function EvolutionInfo(evolution: ChainLink) {
   switch (det.trigger.name) {
     case 'use-item':
       trigger = `Use item`
-      detail = `${det.item?.name}`
+      const minLvl = det.min_level ? ` at lvl${det.min_level}` : ''
+      detail = `${PrettifyName(det.item!.name)}${minLvl}`
       break
 
     case 'level-up':
@@ -59,22 +63,34 @@ function EvolutionInfo(evolution: ChainLink) {
   return <EvolutionDetailComponent trigger={trigger} detail={detail} />
 }
 
-export default async function EvolutionCard({ chainId }: { chainId: number }) {
+export default async function EvolutionCard({ chainId, pokedex }: { chainId: number, pokedex: Pokedex }) {
+  // get the evolution chain data
   const evolutionChain = await new EvolutionClient().getEvolutionChainById(chainId)
-  const species = evolutionChain.chain.species
-  const pokemon = await new PokemonClient().getPokemonByName(species.name)
-  const sprite = pokemon.sprites.front_default!
-  const speciesName = UppifyName(species.name)
-  const evolutions: ChainLink[] = []
+  // determine the first stage that exists for this pokedex
+  let species = evolutionChain.chain.species
   let current = evolutionChain.chain
+  // if the initial stage for the chain isn't in the pokedex, then set it to the next stage instead
+  if (!pokedex.pokemon_entries.some((entry) => entry.pokemon_species.name === species.name)) {
+    current = evolutionChain.chain.evolves_to[0]
+    species = evolutionChain.chain.evolves_to[0].species
+  }
+  // find the evolutions that exist for this pokedex
+  const evolutions: ChainLink[] = []
   while (current.evolves_to.length > 0) {
-    evolutions.push(current.evolves_to[0])
+    if (pokedex.pokemon_entries.some((entry) => entry.pokemon_species.name === current.evolves_to[0].species.name)) {
+      evolutions.push(current.evolves_to[0])
+    }
     current = current.evolves_to[0]
   }
 
+  // bonus data, for display
+  const pokemon = await new PokemonClient().getPokemonByName(species.name)
+  const sprite = pokemon.sprites.front_default!
+  const speciesName = PrettifyName(species.name)
+
   return (
     <div
-      className='m-4 p-4 rounded-xl bg-slate-700 outline-offset-1 outline-white/10 flex flex-col grow-0 shrink-0'
+      className='p-4 rounded-xl bg-slate-700 outline-offset-1 outline-white/10 flex flex-col grow-0 shrink-0 basis-48'
     >
       <img
         src={sprite}
@@ -83,15 +99,16 @@ export default async function EvolutionCard({ chainId }: { chainId: number }) {
         className='rounded-xl bg-slate-600 mx-auto'
       />
       <p>
-        {speciesName}
+        {chainId} {speciesName}
       </p>
       {evolutions.map((evolution) => (
         <div
           key={evolution.species.name}
         >
           {EvolutionInfo(evolution)}
+          <p className='text-center'>&#x2B9F;</p>
           <p>
-            {UppifyName(evolution.species.name)}
+            {PrettifyName(evolution.species.name)}
           </p>
         </div>
       ))}
