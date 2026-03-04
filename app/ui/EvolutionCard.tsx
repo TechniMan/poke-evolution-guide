@@ -5,6 +5,60 @@ function UppifyName(name: string) {
   return `${name[0].toUpperCase()}${name.substring(1)}`
 }
 
+function EvolutionDetailComponent({ trigger, detail }: { trigger: string, detail: string }) {
+  return (
+    <p>
+      {trigger == 'Level up' ?
+        <span className='text-lime-500'>{trigger}</span> :
+        <span className='text-amber-500'>{trigger}</span>}
+      &nbsp;
+      <span>
+        {detail}
+      </span>
+    </p>
+  )
+}
+
+function EvolutionInfo(evolution: ChainLink) {
+  const det = evolution.evolution_details[0]
+  let trigger = ''
+  let detail = ''
+  switch (det.trigger.name) {
+    case 'use-item':
+      trigger = `Use item`
+      detail = `${det.item?.name}`
+      break
+
+    case 'level-up':
+      trigger = 'Level up'
+      if (det.min_level) {
+        detail = `to ${det.min_level}`
+      } else if (det.min_happiness) {
+        detail = `with happiness ${det.min_happiness}`
+      } else {
+        detail = '???'
+      }
+      break
+
+    case 'use-move':
+      const move = det.used_move.name
+      const count = det.min_move_count
+      trigger = `Use '${move}'`
+      detail = `${count} times`
+      break
+
+    case 'trade':
+      trigger = 'Trade'
+      break
+
+    default:
+      trigger = `${det.trigger.name}`
+      break
+  }
+
+  return <EvolutionDetailComponent trigger={trigger} detail={detail} />
+}
+
 export default async function EvolutionCard({ chainId }: { chainId: number }) {
   const evolutionChain = await new EvolutionClient().getEvolutionChainById(chainId)
   const species = evolutionChain.chain.species
@@ -24,9 +78,9 @@ export default async function EvolutionCard({ chainId }: { chainId: number }) {
     >
       <img
         src={sprite}
-        width={100}
-        height={100}
-        className='rounded-xl bg-slate-600'
+        width={96}
+        height={96}
+        className='rounded-xl bg-slate-600 mx-auto'
       />
       <p>
         {speciesName}
@@ -35,9 +89,7 @@ export default async function EvolutionCard({ chainId }: { chainId: number }) {
         <div
           key={evolution.species.name}
         >
-          <p>
-            {evolution.evolution_details[0].min_level}
-          </p>
+          {EvolutionInfo(evolution)}
           <p>
             {UppifyName(evolution.species.name)}
           </p>
