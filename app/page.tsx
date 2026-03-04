@@ -3,15 +3,18 @@ import type { Pokedex } from 'pokenode-ts'
 import Anchor from './ui/Anchor'
 
 import EvolutionCard from '@/app/ui/EvolutionCard'
+import PokemonCard from './ui/PokemonCard'
 
 export default async function Home() {
   const pokedexList: Pokedex[] = []
   const gameClient = new GameClient()
   pokedexList.push(await gameClient.getPokedexByName('letsgo-kanto'))
 
-  const evolutionApi = new EvolutionClient()
+  const pokemonNames = pokedexList[0].pokemon_entries.map(entry => entry.pokemon_species.name)
+
+  // const evolutionApi = new EvolutionClient()
   // limit to first 78 chains while we work with the letsgo-kanto pokedex
-  const evolutionChains = await evolutionApi.listEvolutionChains(0, 78)
+  // const evolutionChains = await evolutionApi.listEvolutionChains(0, 78)
 
   return (
     <div className='min-h-screen h-screen max-h-screen grid grid-cols-1 grid-rows-[auto_auto_auto_1fr_auto]'>
@@ -33,11 +36,17 @@ export default async function Home() {
 
       <main className='w-full bg-slate-900 overflow-y-scroll'>
         <div className='flex flex-wrap gap-4 p-4 justify-center'>
-          {evolutionChains.results.map((chain) => (
+          {/* {evolutionChains.results.map((chain) => (
             <EvolutionCard
               key={chain.url}
               chainId={parseInt(chain.url.split('/')[6])}
               pokedex={pokedexList[0]}
+            />
+          ))} */}
+          {pokemonNames.map((pokName) => (
+            <PokemonCard
+              key={pokName}
+              speciesName={pokName}
             />
           ))}
         </div>

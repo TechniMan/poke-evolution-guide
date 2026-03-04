@@ -1,12 +1,6 @@
 import { EvolutionClient, PokemonClient } from 'pokenode-ts'
 import type { ChainLink, Pokedex } from 'pokenode-ts'
-
-function CapitaliseWord(word: string): string {
-  return `${word[0].toUpperCase()}${word.substring(1)}`
-}
-function PrettifyName(name: string): string {
-  return name.split('-').reduce((acc, val) => `${acc}${CapitaliseWord(val)} `, '')
-}
+import PrettifyName from '../utils/PrettifyName'
 
 function EvolutionDetailComponent({ trigger, detail }: { trigger: string, detail: string }) {
   return (
