@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import './globals.css'
 
-import Anchor from './ui/Anchor'
+import Anchor from '@/app/ui/basic/Anchor'
 
 type PokedexLink = {
   name: string

@@ -1,4 +1,4 @@
-import Paragraph from "./ui/Paragraph";
+import Paragraph from '@/app/ui/basic/Paragraph'
 
 export default async function Home(children: React.ReactNode) {
   return (
