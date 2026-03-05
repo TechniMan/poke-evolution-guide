@@ -9,7 +9,6 @@ const pokemonClient = new PokemonClient()
 function recurseFindEvolutionDetails(speciesName: string, chainLink: ChainLink): EvolutionDetail[] | null {
   // is this chainLink the chainLink we're looking for?
   if (chainLink.species.name === speciesName) {
-    //TODO account for multiple evolution methods
     return chainLink.evolution_details
   }
 
@@ -26,11 +25,13 @@ function recurseFindEvolutionDetails(speciesName: string, chainLink: ChainLink):
 export default async function PokemonCard({
   speciesName,
   dexNumber,
-  pokedex
+  pokedex,
+  hideCaught
 }: {
   speciesName: string,
   dexNumber: number,
-  pokedex: Pokedex
+  pokedex: Pokedex,
+  hideCaught: boolean
 }) {
   let pokemon: Pokemon | null = null
   let sprite: string | null = null
@@ -63,6 +64,7 @@ export default async function PokemonCard({
       isEvolution={isEvolution}
       evolvesFromName={evolvesFromName}
       evolutionDetails={evolutionDetails}
+      hideCaught={hideCaught}
     />
   )
 }

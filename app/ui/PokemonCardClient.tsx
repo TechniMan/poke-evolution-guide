@@ -1,10 +1,10 @@
 'use client'
 
+import { useState } from 'react'
 import type { EvolutionDetail } from 'pokenode-ts'
 
 import PrettifyName from '@/app/utils/PrettifyName'
 import EvolutionDetailText from '@/app/ui/EvolutionDetailText'
-import { useState } from 'react'
 
 export default function PokemonCardClient({
   sprite,
@@ -13,7 +13,8 @@ export default function PokemonCardClient({
   speciesName,
   isEvolution,
   evolvesFromName,
-  evolutionDetails
+  evolutionDetails,
+  hideCaught
 }: {
   sprite: string | null,
   pokedexName: string,
@@ -21,11 +22,11 @@ export default function PokemonCardClient({
   speciesName: string,
   isEvolution: boolean,
   evolvesFromName: string,
-  evolutionDetails: EvolutionDetail[]
+  evolutionDetails: EvolutionDetail[],
+  hideCaught: boolean
 }) {
   const storageKey: string = `${pokedexName}-${speciesName}`
   const [isCaught, setIsCaught] = useState(localStorage.getItem(storageKey) === 'true')
-
   function toggleCaught() {
     localStorage.setItem(storageKey, `${!isCaught}`)
     setIsCaught(!isCaught)
@@ -34,6 +35,7 @@ export default function PokemonCardClient({
   return (
     <div
       className={`
+        ${hideCaught && isCaught ? 'hidden' : ''}
         p-4
         rounded-xl
         bg-slate-700
@@ -60,6 +62,7 @@ export default function PokemonCardClient({
             className='my-auto cursor-pointer'
             type='checkbox'
             checked={isCaught}
+            onChange={toggleCaught}
           />
         </div>
         {sprite ?

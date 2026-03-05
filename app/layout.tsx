@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
 import './globals.css'
 
 import Anchor from '@/app/ui/basic/Anchor'
@@ -9,20 +8,10 @@ type PokedexLink = {
   label: string
 }
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin'],
-});
-
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
-});
-
 export const metadata: Metadata = {
   title: 'Pokemon Evolution Guide',
-  description: 'Uncover the mysteries of Pokemon evolution',
-};
+  description: 'Uncover the mysteries of Pokemon evolution'
+}
 
 export default function RootLayout({
   children,
@@ -46,9 +35,9 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className='antialiased'
       >
-        <div className='min-h-dvh h-dvh max-h-dvh grid grid-cols-1 grid-rows-[auto_auto_auto_1fr_auto]'>
+        <div className='min-h-dvh h-dvh max-h-dvh grid grid-cols-1 grid-rows-[auto_auto_1fr_auto]'>
           <header className='w-full bg-slate-950 p-2 text-center text-xl'>
             <h1>Pokemon Evolution Guide</h1>
           </header>
@@ -63,9 +52,6 @@ export default function RootLayout({
               </span>
             ))}
           </nav>
-          <div className='w-full bg-slate-950'>
-            {/* (todo) Show/hide caught */}
-          </div>
 
           <main className='w-full bg-slate-900 overflow-y-scroll'>
             {children}
@@ -80,5 +66,5 @@ export default function RootLayout({
         </div>
       </body>
     </html>
-  );
+  )
 }
