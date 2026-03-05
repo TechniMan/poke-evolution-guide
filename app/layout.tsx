@@ -2,6 +2,13 @@ import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import './globals.css'
 
+import Anchor from './ui/Anchor'
+
+type PokedexLink = {
+  name: string
+  label: string
+}
+
 const geistSans = Geist({
   variable: '--font-geist-sans',
   subsets: ['latin'],
@@ -22,12 +29,52 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const pokedexList: PokedexLink[] = [{
+    name: 'hoenn',
+    label: 'Ruby/Sapphire/Emerald'
+  }, {
+    name: 'letsgo-kanto',
+    label: "Let's Go"
+  }, {
+    name: 'hisui',
+    label: 'Legends: Arceus'
+  }]
+
   return (
     <html lang='en'>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <div className='min-h-screen h-screen max-h-screen grid grid-cols-1 grid-rows-[auto_auto_auto_1fr_auto]'>
+          <header className='w-full bg-slate-950 text-center'>
+            <h1>Pokemon Evolution Guide</h1>
+          </header>
+
+          <nav className='w-full bg-slate-950'>
+            <Anchor href='/'>Home</Anchor>
+            {pokedexList.map((pokedex) => (
+              <span key={pokedex.name}>
+                &nbsp;| <Anchor href={`/list/${pokedex.name}/`}>
+                  {pokedex.label}
+                </Anchor>
+              </span>
+            ))}
+          </nav>
+          <div className='w-full bg-slate-950'>
+            {/* (todo) Show/hide completed: */}
+          </div>
+
+          <main className='w-full bg-slate-900 overflow-y-scroll'>
+            {children}
+          </main>
+
+          <footer className='w-full bg-slate-950 text-center'>
+            Made by&nbsp;
+            <Anchor href='https://willthomas.dev/'>Will Thomas</Anchor> |&nbsp;
+            <Anchor href='https://github.com/techniman/poke-evolution-guide/'>GitHub</Anchor> |
+            Using <Anchor href='https://pokeapi.co'>PokeAPI</Anchor> via <Anchor href='https://pokenode-ts.vercel.app/'>pokenode-ts</Anchor>
+          </footer>
+        </div>
       </body>
     </html>
   );

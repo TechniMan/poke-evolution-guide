@@ -1,5 +1,5 @@
 import { EvolutionClient, PokemonClient } from 'pokenode-ts'
-import type { ChainLink, EvolutionDetail } from 'pokenode-ts'
+import type { ChainLink, EvolutionDetail, Pokemon, PokemonSpecies } from 'pokenode-ts'
 import PrettifyName from '../utils/PrettifyName'
 
 function EvolutionDetailComponent({ trigger, detail }: { trigger: string, detail: string }) {
@@ -76,29 +76,43 @@ function recurseFindEvolutionDetails(speciesName: string, chainLink: ChainLink):
   return null
 }
 
-export default async function PokemonCard({ speciesName }: { speciesName: string }) {
-  const pokemon = await pokemonClient.getPokemonByName(speciesName)
-  const pokemonSpecies = await pokemonClient.getPokemonSpeciesByName(speciesName)
+export default async function PokemonCard({
+  speciesName,
+  dexNumber
+}: {
+  speciesName: string,
+  dexNumber: number
+}) {
+  let pokemon: Pokemon | null = null
+  let pokemonSpecies: PokemonSpecies | null = null
   let evolutionDetails: EvolutionDetail[] = []
-  if (pokemonSpecies.evolves_from_species) {
-    const evolutionChain = await evolutionClient.getEvolutionChainById(parseInt(pokemonSpecies.evolution_chain.url.split('/')[6]))
-    evolutionDetails = recurseFindEvolutionDetails(speciesName, evolutionChain.chain)!
+  let sprite: string | undefined = undefined
+  try {
+    pokemon = await pokemonClient.getPokemonByName(speciesName)
+    sprite = pokemon.sprites.front_default!
+    pokemonSpecies = await pokemonClient.getPokemonSpeciesByName(speciesName)
+    if (pokemonSpecies.evolves_from_species) {
+      const evolutionChain = await evolutionClient.getEvolutionChainById(parseInt(pokemonSpecies.evolution_chain.url.split('/')[6]))
+      evolutionDetails = recurseFindEvolutionDetails(speciesName, evolutionChain.chain)!
+    }
+  } catch (error) {
+    console.error(error)
   }
-
-  const sprite = pokemon.sprites.front_default!
 
   return (
     <div
       className='p-4 rounded-xl bg-slate-700 outline-offset-1 outline-white/10 flex flex-col grow-0 shrink-0 basis-48'
     >
-      <img
-        src={sprite}
-        width={96}
-        height={96}
-        className='rounded-xl bg-slate-600 mx-auto'
-      />
+      {sprite ?
+        <img
+          src={sprite}
+          width={96}
+          height={96}
+          className='rounded-xl bg-slate-600 mx-auto'
+        />
+        : ''}
       <p>
-        {pokemon.id} {PrettifyName(speciesName)}
+        {dexNumber} {PrettifyName(speciesName)}
       </p>
       <ul>
         {evolutionDetails ? evolutionDetails.map((evolution, idx) => (
