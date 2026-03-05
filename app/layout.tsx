@@ -61,7 +61,7 @@ export default function RootLayout({
             ))}
           </nav>
           <div className='w-full bg-slate-950'>
-            {/* (todo) Show/hide completed: */}
+            {/* (todo) Show/hide caught */}
           </div>
 
           <main className='w-full bg-slate-900 overflow-y-scroll'>

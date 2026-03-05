@@ -50,12 +50,14 @@ export default async function PokemonCard({
       evolutionDetails = recurseFindEvolutionDetails(speciesName, evolutionChain.chain)!
     }
   } catch (error) {
+    console.error(`Error in rendering PokemonCard for ${speciesName}:`)
     console.error(error)
   }
 
   return (
     <PokemonCardClient
       sprite={sprite}
+      pokedexName={pokedex.name}
       dexNumber={dexNumber}
       speciesName={speciesName}
       isEvolution={isEvolution}
