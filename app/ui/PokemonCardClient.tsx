@@ -47,6 +47,7 @@ export default function PokemonCardClient({
         grow-0
         shrink-0
         w-full
+        transition
         sm:w-auto
         sm:basis-64
       `}
