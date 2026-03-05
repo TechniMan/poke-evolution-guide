@@ -1,3 +1,5 @@
+'use client'
+
 import type { EvolutionDetail } from 'pokenode-ts'
 import PrettifyName from '../utils/PrettifyName'
 

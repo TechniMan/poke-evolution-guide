@@ -1,7 +1,7 @@
 import { EvolutionClient, PokemonClient } from 'pokenode-ts'
 import type { ChainLink, EvolutionDetail, Pokedex, Pokemon, PokemonSpecies } from 'pokenode-ts'
-import PrettifyName from '../utils/PrettifyName'
-import EvolutionDetailText from './EvolutionDetailText'
+
+import PokemonCardClient from './PokemonCardClient'
 
 const evolutionClient = new EvolutionClient()
 const pokemonClient = new PokemonClient()
@@ -33,17 +33,19 @@ export default async function PokemonCard({
   pokedex: Pokedex
 }) {
   let pokemon: Pokemon | null = null
+  let sprite: string | null = null
   let pokemonSpecies: PokemonSpecies | null = null
-  let evolutionDetails: EvolutionDetail[] = []
-  let sprite: string | undefined = undefined
   let isEvolution: boolean = false
+  let evolvesFromName: string = ''
+  let evolutionDetails: EvolutionDetail[] = []
   try {
     pokemon = await pokemonClient.getPokemonByName(speciesName)
-    sprite = pokemon.sprites.front_default!
+    sprite = pokemon.sprites.front_default
     pokemonSpecies = await pokemonClient.getPokemonSpeciesByName(speciesName)
     // if this Pokemon evolves from another Pokemon which is also in the selected Pokedex
     isEvolution = pokemonSpecies.evolves_from_species && pokedex.pokemon_entries.some(entry => entry.pokemon_species.name === pokemonSpecies?.evolves_from_species.name)
     if (isEvolution) {
+      evolvesFromName = pokemonSpecies.evolves_from_species.name
       const evolutionChain = await evolutionClient.getEvolutionChainById(parseInt(pokemonSpecies.evolution_chain.url.split('/')[6]))
       evolutionDetails = recurseFindEvolutionDetails(speciesName, evolutionChain.chain)!
     }
@@ -52,34 +54,13 @@ export default async function PokemonCard({
   }
 
   return (
-    <div
-      className='p-4 rounded-xl bg-slate-700 outline-offset-1 outline-white/10 flex flex-col gap-1 grow-0 shrink-0 w-full sm:w-auto sm:basis-64'
-    >
-      {sprite ?
-        <img
-          src={sprite}
-          width={96}
-          height={96}
-          className='rounded-xl bg-slate-600 mx-auto'
-        />
-        : ''}
-      <p>
-        {dexNumber} {PrettifyName(speciesName)}
-      </p>
-      {isEvolution ?
-        <p>
-          Evolves from <strong>{PrettifyName(pokemonSpecies!.evolves_from_species.name)}</strong>
-        </p> :
-        ''}
-      <ul>
-        {evolutionDetails ? evolutionDetails.map((evolution, idx) => (
-          <li
-            key={idx}
-          >
-            <EvolutionDetailText evolutionDetail={evolution} />
-          </li>
-        )) : ''}
-      </ul>
-    </div>
+    <PokemonCardClient
+      sprite={sprite}
+      dexNumber={dexNumber}
+      speciesName={speciesName}
+      isEvolution={isEvolution}
+      evolvesFromName={evolvesFromName}
+      evolutionDetails={evolutionDetails}
+    />
   )
 }

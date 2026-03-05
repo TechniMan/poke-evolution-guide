@@ -46,11 +46,11 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <div className='min-h-dvh h-dvh max-h-dvh grid grid-cols-1 grid-rows-[auto_auto_auto_1fr_auto]'>
-          <header className='w-full bg-slate-950 text-center'>
+          <header className='w-full bg-slate-950 p-2 text-center text-xl'>
             <h1>Pokemon Evolution Guide</h1>
           </header>
 
-          <nav className='w-full bg-slate-950'>
+          <nav className='w-full bg-slate-950 p-2'>
             <Anchor href='/'>Home</Anchor>
             {pokedexList.map((pokedex) => (
               <span key={pokedex.name}>
@@ -68,7 +68,7 @@ export default function RootLayout({
             {children}
           </main>
 
-          <footer className='w-full bg-slate-950 text-center'>
+          <footer className='w-full bg-slate-950 p-2 text-center'>
             Made by&nbsp;
             <Anchor href='https://willthomas.dev/'>Will Thomas</Anchor> |&nbsp;
             <Anchor href='https://github.com/techniman/poke-evolution-guide/'>GitHub</Anchor> |

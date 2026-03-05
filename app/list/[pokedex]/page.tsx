@@ -7,7 +7,7 @@ export default async function PokemonListPage({ params }: { params: Promise<{ po
   const pokedex = await gameClient.getPokedexByName(pokedexName)
 
   return (
-    <div className='flex flex-wrap gap-4 p-4 justify-center'>
+    <div className='flex flex-wrap gap-4 sm:gap-6 p-4 justify-center'>
       {pokedex.pokemon_entries.map((entry) => (
         <PokemonCard
           key={entry.entry_number}
