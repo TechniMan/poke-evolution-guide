@@ -13,6 +13,7 @@ export default async function PokemonListPage({ params }: { params: Promise<{ po
           key={entry.entry_number}
           speciesName={entry.pokemon_species.name}
           dexNumber={entry.entry_number}
+          pokedex={pokedex}
         />
       ))}
     </div>

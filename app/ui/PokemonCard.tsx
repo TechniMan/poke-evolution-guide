@@ -1,5 +1,5 @@
 import { EvolutionClient, PokemonClient } from 'pokenode-ts'
-import type { ChainLink, EvolutionDetail, Pokemon, PokemonSpecies } from 'pokenode-ts'
+import type { ChainLink, EvolutionDetail, Pokedex, Pokemon, PokemonSpecies } from 'pokenode-ts'
 import PrettifyName from '../utils/PrettifyName'
 import EvolutionDetailText from './EvolutionDetailText'
 
@@ -25,20 +25,25 @@ function recurseFindEvolutionDetails(speciesName: string, chainLink: ChainLink):
 
 export default async function PokemonCard({
   speciesName,
-  dexNumber
+  dexNumber,
+  pokedex
 }: {
   speciesName: string,
-  dexNumber: number
+  dexNumber: number,
+  pokedex: Pokedex
 }) {
   let pokemon: Pokemon | null = null
   let pokemonSpecies: PokemonSpecies | null = null
   let evolutionDetails: EvolutionDetail[] = []
   let sprite: string | undefined = undefined
+  let isEvolution: boolean = false
   try {
     pokemon = await pokemonClient.getPokemonByName(speciesName)
     sprite = pokemon.sprites.front_default!
     pokemonSpecies = await pokemonClient.getPokemonSpeciesByName(speciesName)
-    if (pokemonSpecies.evolves_from_species) {
+    // if this Pokemon evolves from another Pokemon which is also in the selected Pokedex
+    isEvolution = pokemonSpecies.evolves_from_species && pokedex.pokemon_entries.some(entry => entry.pokemon_species.name === pokemonSpecies?.evolves_from_species.name)
+    if (isEvolution) {
       const evolutionChain = await evolutionClient.getEvolutionChainById(parseInt(pokemonSpecies.evolution_chain.url.split('/')[6]))
       evolutionDetails = recurseFindEvolutionDetails(speciesName, evolutionChain.chain)!
     }
@@ -61,9 +66,9 @@ export default async function PokemonCard({
       <p>
         {dexNumber} {PrettifyName(speciesName)}
       </p>
-      {pokemonSpecies?.evolves_from_species ?
+      {isEvolution ?
         <p>
-          Evolves from <strong>{PrettifyName(pokemonSpecies?.evolves_from_species.name)}</strong>
+          Evolves from <strong>{PrettifyName(pokemonSpecies!.evolves_from_species.name)}</strong>
         </p> :
         ''}
       <ul>
