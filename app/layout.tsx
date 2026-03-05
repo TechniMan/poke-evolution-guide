@@ -30,11 +30,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const pokedexList: PokedexLink[] = [{
+    name: 'kanto',
+    label: 'FireRed/LeafGreen'
+  }, {
     name: 'hoenn',
     label: 'Ruby/Sapphire/Emerald'
   }, {
     name: 'letsgo-kanto',
-    label: "Let's Go"
+    label: "Let's Go Pikachu/Eevee"
   }, {
     name: 'hisui',
     label: 'Legends: Arceus'
