@@ -48,7 +48,7 @@ export default async function PokemonCard({
 
   return (
     <div
-      className='p-4 rounded-xl bg-slate-700 outline-offset-1 outline-white/10 flex flex-col grow-0 shrink-0 basis-48'
+      className='p-4 rounded-xl bg-slate-700 outline-offset-1 outline-white/10 flex flex-col gap-1 grow-0 shrink-0 w-full sm:w-auto sm:basis-64'
     >
       {sprite ?
         <img
@@ -63,7 +63,7 @@ export default async function PokemonCard({
       </p>
       {pokemonSpecies?.evolves_from_species ?
         <p>
-          Evolves from <strong>{pokemonSpecies?.evolves_from_species.name}</strong>
+          Evolves from <strong>{PrettifyName(pokemonSpecies?.evolves_from_species.name)}</strong>
         </p> :
         ''}
       <ul>

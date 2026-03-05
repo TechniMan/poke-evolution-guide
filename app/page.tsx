@@ -1,6 +1,6 @@
 import Paragraph from '@/app/ui/basic/Paragraph'
 
-export default async function Home() {
+export default async function HomePage() {
   return (
     <div className='p-4'>
       <Paragraph>

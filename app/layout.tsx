@@ -45,7 +45,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className='min-h-screen h-screen max-h-screen grid grid-cols-1 grid-rows-[auto_auto_auto_1fr_auto]'>
+        <div className='min-h-dvh h-dvh max-h-dvh grid grid-cols-1 grid-rows-[auto_auto_auto_1fr_auto]'>
           <header className='w-full bg-slate-950 text-center'>
             <h1>Pokemon Evolution Guide</h1>
           </header>
