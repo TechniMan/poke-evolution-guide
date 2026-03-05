@@ -1,6 +1,6 @@
 import Paragraph from '@/app/ui/basic/Paragraph'
 
-export default async function Home(children: React.ReactNode) {
+export default async function Home() {
   return (
     <div className='p-4'>
       <Paragraph>
