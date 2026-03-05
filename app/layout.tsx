@@ -22,8 +22,23 @@ export default function RootLayout({
     name: 'kanto',
     label: 'FireRed/LeafGreen'
   }, {
+    name: 'original-johto',
+    label: 'Gold/Silver/Crystal'
+  }, {
     name: 'hoenn',
     label: 'Ruby/Sapphire/Emerald'
+  }, {
+    name: 'original-sinnoh',
+    label: 'Diamond/Pearl'
+  }, {
+    name: 'extended-sinnoh',
+    label: 'Platinum'
+  }, {
+    name: 'updated-johto',
+    label: 'HeartGold/SoulSilver'
+  }, {
+    name: 'updated-hoenn',
+    label: 'OmegaRuby/AlphaSapphire'
   }, {
     name: 'letsgo-kanto',
     label: "Let's Go Pikachu/Eevee"
