@@ -39,20 +39,15 @@ export default async function PokemonCard({
   let isEvolution: boolean = false
   let evolvesFromName: string = ''
   let evolutionDetails: EvolutionDetail[] = []
-  try {
-    pokemon = await pokemonClient.getPokemonByName(speciesName)
-    sprite = pokemon.sprites.front_default
-    pokemonSpecies = await pokemonClient.getPokemonSpeciesByName(speciesName)
-    // if this Pokemon evolves from another Pokemon which is also in the selected Pokedex
-    isEvolution = pokemonSpecies.evolves_from_species && pokedex.pokemon_entries.some(entry => entry.pokemon_species.name === pokemonSpecies?.evolves_from_species.name)
-    if (isEvolution) {
-      evolvesFromName = pokemonSpecies.evolves_from_species.name
-      const evolutionChain = await evolutionClient.getEvolutionChainById(parseInt(pokemonSpecies.evolution_chain.url.split('/')[6]))
-      evolutionDetails = recurseFindEvolutionDetails(speciesName, evolutionChain.chain)!
-    }
-  } catch (error) {
-    console.error(`Error in rendering PokemonCard for ${speciesName}:`)
-    console.error(error)
+  pokemonSpecies = await pokemonClient.getPokemonSpeciesByName(speciesName)
+  pokemon = await pokemonClient.getPokemonById(pokemonSpecies.id)
+  sprite = pokemon.sprites.front_default
+  // if this Pokemon evolves from another Pokemon which is also in the selected Pokedex
+  isEvolution = pokemonSpecies.evolves_from_species && pokedex.pokemon_entries.some(entry => entry.pokemon_species.name === pokemonSpecies?.evolves_from_species.name)
+  if (isEvolution) {
+    evolvesFromName = pokemonSpecies.evolves_from_species.name
+    const evolutionChain = await evolutionClient.getEvolutionChainById(parseInt(pokemonSpecies.evolution_chain.url.split('/')[6]))
+    evolutionDetails = recurseFindEvolutionDetails(speciesName, evolutionChain.chain)!
   }
 
   return (
