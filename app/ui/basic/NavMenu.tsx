@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { usePathname } from 'next/navigation'
 
 import Anchor from '@/app/ui/basic/Anchor'
 
@@ -20,6 +21,8 @@ export default function NavMenu({
   function handleClickMenu() {
     setIsMenuOpen(!isMenuOpen)
   }
+
+  const currentPath = usePathname()
 
   return (
     <div className='w-full bg-slate-950 rounded-sm'>
@@ -59,21 +62,32 @@ export default function NavMenu({
         `}
       >
         {items.map((item, idx) => (
-          <Anchor
-            className='
-              bg-slate-900
-              hover:bg-slate-700
-              duration-50
-              px-2
-              py-1
-              rounded-sm
-              transition
-            '
-            href={item.link}
-            key={idx}
-          >
-            {item.label}
-          </Anchor>
+          currentPath === item.link ?
+            <span
+              className='
+                bg-slate-900
+                italic
+                px-2
+                py-1
+              '
+            >
+              {item.label}
+            </span>
+            :
+            <Anchor
+              className='
+                  bg-slate-900
+                  hover:bg-slate-800
+                  duration-50
+                  px-2
+                  py-1
+                  transition
+                '
+              href={item.link}
+              key={idx}
+            >
+              {item.label}
+            </Anchor>
         ))}
       </div>
     </div>
