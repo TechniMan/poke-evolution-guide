@@ -26,7 +26,8 @@ export default function PokemonCardClient({
   hideCaught: boolean
 }) {
   const storageKey: string = `${pokedexName}-${speciesName}`
-  const [isCaught, setIsCaught] = useState(localStorage.getItem(storageKey) === 'true')
+  const initialIsCaught = localStorage.getItem(storageKey) === 'true'
+  const [isCaught, setIsCaught] = useState(initialIsCaught)
   function toggleCaught() {
     localStorage.setItem(storageKey, `${!isCaught}`)
     setIsCaught(!isCaught)

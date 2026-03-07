@@ -2,11 +2,9 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 import Anchor from '@/app/ui/basic/Anchor'
+import type { NavMenuItem } from './ui/basic/NavMenu'
+import NavMenu from './ui/basic/NavMenu'
 
-type PokedexLink = {
-  name: string
-  label: string
-}
 
 export const metadata: Metadata = {
   title: 'Pokemon Evolution Guide',
@@ -18,32 +16,35 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const pokedexList: PokedexLink[] = [{
-    name: 'kanto',
+  const navList: NavMenuItem[] = [{
+    link: '/',
+    label: 'Home'
+  }, {
+    link: '/list/kanto',
     label: 'FireRed/LeafGreen'
   }, {
-    name: 'original-johto',
+    link: '/list/original-johto',
     label: 'Gold/Silver/Crystal'
   }, {
-    name: 'hoenn',
+    link: '/list/hoenn',
     label: 'Ruby/Sapphire/Emerald'
   }, {
-    name: 'original-sinnoh',
+    link: '/list/original-sinnoh',
     label: 'Diamond/Pearl'
   }, {
-    name: 'extended-sinnoh',
+    link: '/list/extended-sinnoh',
     label: 'Platinum'
   }, {
-    name: 'updated-johto',
+    link: '/list/updated-johto',
     label: 'HeartGold/SoulSilver'
   }, {
-    name: 'updated-hoenn',
+    link: '/list/updated-hoenn',
     label: 'OmegaRuby/AlphaSapphire'
   }, {
-    name: 'letsgo-kanto',
+    link: '/list/letsgo-kanto',
     label: "Let's Go Pikachu/Eevee"
   }, {
-    name: 'hisui',
+    link: '/list/hisui',
     label: 'Legends: Arceus'
   }]
 
@@ -58,14 +59,10 @@ export default function RootLayout({
           </header>
 
           <nav className='w-full bg-slate-950 p-2'>
-            <Anchor href='/'>Home</Anchor>
-            {pokedexList.map((pokedex) => (
-              <span key={pokedex.name}>
-                &nbsp;| <Anchor href={`/list/${pokedex.name}/`}>
-                  {pokedex.label}
-                </Anchor>
-              </span>
-            ))}
+            <NavMenu
+              items={navList}
+              menuLabel='Choose a Pokedex'
+            />
           </nav>
 
           <main className='w-full bg-slate-900 overflow-y-scroll'>
