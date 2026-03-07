@@ -25,7 +25,7 @@ export default function NavMenu({
   const currentPath = usePathname()
 
   return (
-    <div className='w-full bg-slate-950 rounded-sm'>
+    <div className='w-full bg-slate-950 rounded-md'>
       {/* The initialiser button */}
       <div
         className='
@@ -33,7 +33,7 @@ export default function NavMenu({
           cursor-pointer
           px-2
           py-1
-          rounded-sm
+          rounded-md
           w-fit
         '
         onClick={handleClickMenu}
@@ -53,7 +53,7 @@ export default function NavMenu({
           ${isMenuOpen ? 'outline-1' : 'outline-0'}
           outline-slate-600
           overflow-hidden
-          rounded-sm
+          rounded-md
           transition
           transition-discrete
           w-auto

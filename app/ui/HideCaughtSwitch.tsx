@@ -13,9 +13,9 @@ export default function HideCaughtSwitch({
   }
 
   return (
-    <div className='w-full bg-slate-950 rounded-xl'>
+    <div className='w-full bg-slate-950 rounded-md'>
       <div
-        className='bg-slate-600 cursor-pointer rounded-xl px-2 py-1 w-fit'
+        className='bg-slate-600 cursor-pointer rounded-md px-2 py-1 w-fit'
         onClick={toggleHideCaught}
       >
         <label
