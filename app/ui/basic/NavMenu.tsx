@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 import Anchor from '@/app/ui/basic/Anchor'
@@ -24,8 +25,18 @@ export default function NavMenu({
 
   const currentPath = usePathname()
 
+  function handleNavMenuItemClicked() {
+    setIsMenuOpen(false)
+  }
+
   return (
-    <div className='w-full bg-slate-950 rounded-md'>
+    <div
+      className='
+        w-full
+        bg-slate-950
+        rounded-md
+      '
+    >
       {/* The initialiser button */}
       <div
         className='
@@ -70,24 +81,27 @@ export default function NavMenu({
                 px-2
                 py-1
               '
+              key={idx}
             >
-              {item.label}
+              &gt; {item.label}
             </span>
             :
-            <Anchor
+            <Link
               className='
                   bg-slate-900
                   hover:bg-slate-800
                   duration-50
                   px-2
                   py-1
+                  text-blue-500
                   transition
                 '
               href={item.link}
               key={idx}
+              onClick={handleNavMenuItemClicked}
             >
               {item.label}
-            </Anchor>
+            </Link>
         ))}
       </div>
     </div>
