@@ -1,20 +1,34 @@
 import Paragraph from '@/app/ui/basic/Paragraph'
+import UnorderedList from './ui/basic/UnorderedList'
 
 export default async function HomePage() {
+  const featuresList = [
+    "Select the Pokedex for the game you're playing",
+    'Lists all Pokemon in that Pokedex order',
+    'Shows how to evolve into that Pokemon'
+  ]
+  const plannedList = [
+    'Filter by Pokemon name',
+    'Show encounters available on each route of the region',
+    'List areas that Pokemon can be encountered',
+    'List moves learned by that Pokemon by level',
+    'Add remaining Pokedexes'
+  ]
+
   return (
     <div className='p-4'>
-      <Paragraph className='font-bold'>
-        Use one of the Pokedex links above to get started :)
-      </Paragraph>
       <Paragraph>
-        When I was young, the only method I knew of to evolve Pokemon was by levelling them up to a certain point. I wanted to complete my Pokedex, so I spent many hours grinding levels to try and get some to evolve, like Graveler&gt;Golem, Kadabra&gt;Alakazam, only to later find out that they had to be traded in order to evolve again. I was as miffed as a 10 year old can be.
+        Use this website to assist you in completing your Pokedex. Current features:
       </Paragraph>
+      <UnorderedList
+        items={featuresList}
+      />
       <Paragraph>
-        So now I've created this little website to help figure out which Pokemon are safe to level up to get their evolutions, and which require other means (such as trading, or a special item).
+        To-dos:
       </Paragraph>
-      <Paragraph>
-        Tick each one as you catch/evolve into them to track completion of your Pokedex! The app stores the ones you've ticked locally in your browser storage, so you can come back to the list another time.
-      </Paragraph>
+      <UnorderedList
+        items={plannedList}
+      />
     </div>
   )
 }
