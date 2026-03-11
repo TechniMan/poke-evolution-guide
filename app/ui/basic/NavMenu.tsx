@@ -30,16 +30,18 @@ export default function NavMenu({
   return (
     <div
       className='
-        w-full
         bg-slate-950
         rounded-md
-      '
+        w-full
+        '
     >
       {/* The initialiser button */}
       <div
         className='
           bg-slate-600
           cursor-pointer
+          m-auto
+          sm:m-0
           px-2
           py-1
           rounded-md

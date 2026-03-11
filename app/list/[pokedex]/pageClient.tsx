@@ -1,28 +1,72 @@
 'use client'
 
 import { useState } from 'react'
-import HideCaughtSwitch from '@/app/ui/HideCaughtSwitch'
-import { HideCaughtContext } from '@/app/contexts/HideCaughtContext'
+import HideCaughtSwitch from '@/app/ui/filters/HideCaughtSwitch'
+import { Filters, FiltersContext } from '@/app/contexts/FiltersContext'
+import NameFilterInput from '@/app/ui/filters/NameFilter'
 
 export default function PokemonListPageClient({
   children
 }: {
   children: React.ReactNode
 }) {
-  const [hideCaught, setHideCaught] = useState(false)
+  const [filters, setFilters] = useState<Filters>({
+    hideCaught: false,
+    nameFilter: ''
+  })
+
+  function setHideCaught() {
+    setFilters(Object.assign({
+      ...filters
+    }, {
+      hideCaught: !filters.hideCaught
+    }))
+  }
+
+  function setNameFilter(newFilter: string) {
+    setFilters(Object.assign({
+      ...filters
+    }, {
+      nameFilter: newFilter
+    }))
+  }
 
   return (
-    <div className='flex flex-wrap gap-4 sm:gap-6 p-4 justify-center'>
-      <div className='w-full bg-slate-950 rounded-md'>
+    <div>
+      <div className='
+        bg-slate-950
+        flex
+        flex-wrap
+        gap-4
+        p-2
+        w-full
+      '>
+        <div className='
+          sm:block
+          hidden
+          pl-2
+          py-1
+        '>
+          Filters:
+        </div>
+
         <HideCaughtSwitch
-          hideCaught={hideCaught}
+          hideCaught={filters.hideCaught}
           setHideCaught={setHideCaught}
+        />
+
+        <NameFilterInput
+          nameFilter={filters.nameFilter}
+          setNameFilter={setNameFilter}
         />
       </div>
 
-      <HideCaughtContext value={hideCaught}>
-        {children}
-      </HideCaughtContext>
-    </div >
+      <div className='flex flex-wrap gap-4 sm:gap-6 p-4 justify-center'>
+
+        <FiltersContext value={filters}>
+          {children}
+        </FiltersContext>
+      </div >
+    </div>
   )
 }

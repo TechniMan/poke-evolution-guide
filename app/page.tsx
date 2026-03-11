@@ -5,14 +5,16 @@ export default async function HomePage() {
   const featuresList = [
     "Select the Pokedex for the game you're playing",
     'Lists all Pokemon in that Pokedex order',
-    'Shows how to evolve into that Pokemon'
+    'Shows how to evolve into that Pokemon',
+    "Tick off Pokemon you've caught",
+    'Hide Pokemon marked as caught',
+    'Filter by name of species and the species it evolves from',
   ]
   const plannedList = [
-    'Filter by Pokemon name',
     'Show encounters available on each route of the region',
     'List areas that Pokemon can be encountered',
     'List moves learned by that Pokemon by level',
-    'Add remaining Pokedexes'
+    "Add remaining games' Pokedexes",
   ]
 
   return (

@@ -5,7 +5,7 @@ import type { EvolutionDetail } from 'pokenode-ts'
 
 import PrettifyName from '@/app/utils/PrettifyName'
 import EvolutionDetailText from '@/app/ui/EvolutionDetailText'
-import { HideCaughtContext } from '@/app/contexts/HideCaughtContext'
+import { FiltersContext } from '@/app/contexts/FiltersContext'
 
 export default function PokemonCardClient({
   sprite,
@@ -31,12 +31,22 @@ export default function PokemonCardClient({
     localStorage.setItem(storageKey, `${!isCaught}`)
     setIsCaught(!isCaught)
   }
-  const hideCaught = useContext(HideCaughtContext)
+  const filters = useContext(FiltersContext)
+
+  // hide this card if:
+  const filteredOut =
+    // it is caught and the caught filter is on, or
+    (filters.hideCaught && isCaught) ||
+    // if it doesn't match the name filter
+    (filters.nameFilter &&
+      !(speciesName.indexOf(filters.nameFilter) !== -1 ||
+        evolvesFromName.indexOf(filters.nameFilter) !== -1)
+    )
 
   return (
     <div
       className={`
-        ${hideCaught && isCaught ? 'hidden' : ''}
+        ${filteredOut ? 'hidden' : ''}
         p-4
         rounded-xl
         bg-slate-700
