@@ -1,10 +1,11 @@
 'use client'
 
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import type { EvolutionDetail } from 'pokenode-ts'
 
 import PrettifyName from '@/app/utils/PrettifyName'
 import EvolutionDetailText from '@/app/ui/EvolutionDetailText'
+import { HideCaughtContext } from '@/app/contexts/HideCaughtContext'
 
 export default function PokemonCardClient({
   sprite,
@@ -13,8 +14,7 @@ export default function PokemonCardClient({
   speciesName,
   isEvolution,
   evolvesFromName,
-  evolutionDetails,
-  hideCaught
+  evolutionDetails
 }: {
   sprite: string | null,
   pokedexName: string,
@@ -22,8 +22,7 @@ export default function PokemonCardClient({
   speciesName: string,
   isEvolution: boolean,
   evolvesFromName: string,
-  evolutionDetails: EvolutionDetail[],
-  hideCaught: boolean
+  evolutionDetails: EvolutionDetail[]
 }) {
   const storageKey: string = `${pokedexName}-${speciesName}`
   const initialIsCaught = localStorage.getItem(storageKey) === 'true'
@@ -32,6 +31,7 @@ export default function PokemonCardClient({
     localStorage.setItem(storageKey, `${!isCaught}`)
     setIsCaught(!isCaught)
   }
+  const hideCaught = useContext(HideCaughtContext)
 
   return (
     <div

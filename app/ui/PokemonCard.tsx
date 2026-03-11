@@ -25,13 +25,11 @@ function recurseFindEvolutionDetails(speciesName: string, chainLink: ChainLink):
 export default async function PokemonCard({
   speciesName,
   dexNumber,
-  pokedex,
-  hideCaught
+  pokedex
 }: {
   speciesName: string,
   dexNumber: number,
-  pokedex: Pokedex,
-  hideCaught: boolean
+  pokedex: Pokedex
 }) {
   let pokemon: Pokemon | null = null
   let sprite: string | null = null
@@ -59,7 +57,6 @@ export default async function PokemonCard({
       isEvolution={isEvolution}
       evolvesFromName={evolvesFromName}
       evolutionDetails={evolutionDetails}
-      hideCaught={hideCaught}
     />
   )
 }

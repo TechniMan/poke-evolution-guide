@@ -4,8 +4,6 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
-import Anchor from '@/app/ui/basic/Anchor'
-
 export type NavMenuItem = {
   label: string,
   link: string
