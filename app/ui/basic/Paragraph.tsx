@@ -1,10 +1,8 @@
-import type { ReactNode } from 'react'
-
 export default function Paragraph({
   children,
   className
 }: {
-  children: ReactNode,
+  children: React.ReactNode,
   className?: string
 }) {
   return (

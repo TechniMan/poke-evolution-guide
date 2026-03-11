@@ -1,11 +1,9 @@
-import type { ReactNode } from 'react'
-
 export default function Anchor({
   children,
   className,
   href
 }: {
-  children: ReactNode,
+  children: React.ReactNode,
   className?: string,
   href: string
 }) {
