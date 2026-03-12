@@ -33,14 +33,17 @@ export default function PokemonCardClient({
   }
   const filters = useContext(FiltersContext)
 
+  const prettySpecies = PrettifyName(speciesName)
+  const prettyEvolvesFrom = PrettifyName(evolvesFromName)
+
   // hide this card if:
   const filteredOut =
     // it is caught and the caught filter is on, or
     (filters.hideCaught && isCaught) ||
     // if it doesn't match the name filter
     (filters.nameFilter &&
-      !(speciesName.indexOf(filters.nameFilter) !== -1 ||
-        evolvesFromName.indexOf(filters.nameFilter) !== -1)
+      !(prettySpecies.toLowerCase().indexOf(filters.nameFilter.toLowerCase()) !== -1 ||
+        prettyEvolvesFrom.toLowerCase().indexOf(filters.nameFilter.toLowerCase()) !== -1)
     )
 
   return (
@@ -87,11 +90,11 @@ export default function PokemonCardClient({
           : ''}
       </div>
       <p>
-        {dexNumber} {PrettifyName(speciesName)}
+        {dexNumber} {prettySpecies}
       </p>
       {isEvolution ?
         <p>
-          Evolves from <strong>{PrettifyName(evolvesFromName)}</strong>
+          Evolves from <strong>{prettyEvolvesFrom}</strong>
         </p> :
         ''}
       <ul>
