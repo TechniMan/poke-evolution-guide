@@ -40,7 +40,7 @@ export default function PokemonCardClient({
   const filteredOut =
     // it is caught and the caught filter is on, or
     (filters.hideCaught && isCaught) ||
-    // if it doesn't match the name filter
+    // it doesn't match the name filter
     (filters.nameFilter &&
       !(prettySpecies.toLowerCase().indexOf(filters.nameFilter.toLowerCase()) !== -1 ||
         prettyEvolvesFrom.toLowerCase().indexOf(filters.nameFilter.toLowerCase()) !== -1)

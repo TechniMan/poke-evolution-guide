@@ -5,30 +5,40 @@ import HideCaughtSwitch from '@/app/ui/filters/HideCaughtSwitch'
 import { Filters, FiltersContext } from '@/app/contexts/FiltersContext'
 import NameFilterInput from '@/app/ui/filters/NameFilter'
 
+const filterStorageKey = 'listpage-filters'
+
 export default function PokemonListPageClient({
   children
 }: {
   children: React.ReactNode
 }) {
-  const [filters, setFilters] = useState<Filters>({
-    hideCaught: false,
-    nameFilter: ''
-  })
+  const initialFilterState = JSON.parse(
+    localStorage.getItem(filterStorageKey) ||
+    '{"hideCaught":false,"nameFilter":""}'
+  )
+  const [filters, setFilters] = useState<Filters>(initialFilterState)
+  function persistFilterState(filterState: Filters) {
+    localStorage.setItem(filterStorageKey, JSON.stringify(filterState))
+  }
 
   function setHideCaught() {
-    setFilters(Object.assign({
+    const newState = Object.assign({
       ...filters
     }, {
       hideCaught: !filters.hideCaught
-    }))
+    })
+    setFilters(newState)
+    persistFilterState(newState)
   }
 
   function setNameFilter(newFilter: string) {
-    setFilters(Object.assign({
+    const newState = Object.assign({
       ...filters
     }, {
       nameFilter: newFilter
-    }))
+    })
+    setFilters(newState)
+    persistFilterState(newState)
   }
 
   return (
