@@ -13,7 +13,7 @@ export default function HideCaughtSwitch({
 
   return (
     <div
-      className='bg-slate-600 cursor-pointer rounded-md px-2 py-1 w-fit'
+      className='bg-slate-600 hover:bg-slate-500 cursor-pointer rounded-md px-2 py-1 w-fit'
       onClick={toggleHideCaught}
     >
       <label

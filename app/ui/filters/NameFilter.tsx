@@ -18,14 +18,14 @@ export default function NameFilterInput({
 
   return (
     <div
-      className='bg-slate-600 cursor-pointer rounded-md px-2 py-1 w-fit'
+      className='bg-slate-600 hover:bg-slate-500 cursor-pointer rounded-md px-2 py-1 w-fit'
       onClick={selectInput}
     >
       <label
         className='cursor-pointer'
         id='name-filter-label'
       >
-        Filter by name:
+        Filter by name/item:
       </label>
       &nbsp;
       <input

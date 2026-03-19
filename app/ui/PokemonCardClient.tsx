@@ -35,15 +35,24 @@ export default function PokemonCardClient({
 
   const prettySpecies = PrettifyName(speciesName)
   const prettyEvolvesFrom = PrettifyName(evolvesFromName)
+  const evolutionItemLowercaseArr = evolutionDetails.filter(ed => ed.item?.name).map(ed => PrettifyName(ed.item!.name).toLowerCase())
+
+  const filterLower = filters.nameFilter.toLowerCase()
 
   // hide this card if:
   const filteredOut =
     // it is caught and the caught filter is on, or
     (filters.hideCaught && isCaught) ||
-    // it doesn't match the name filter
+    // it doesn't match the filter i.e.
     (filters.nameFilter &&
-      !(prettySpecies.toLowerCase().indexOf(filters.nameFilter.toLowerCase()) !== -1 ||
-        prettyEvolvesFrom.toLowerCase().indexOf(filters.nameFilter.toLowerCase()) !== -1)
+      (
+        // species name doesn't match, and
+        prettySpecies.toLowerCase().indexOf(filterLower) === -1 &&
+        // evolves-from-species name doesn't match, and
+        prettyEvolvesFrom.toLowerCase().indexOf(filterLower) === -1 &&
+        // no names of evolution items match (i.e. there are not some that do match)
+        !evolutionItemLowercaseArr.some(item => item.indexOf(filterLower) !== -1)
+      )
     )
 
   return (
