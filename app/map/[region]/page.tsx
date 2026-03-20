@@ -1,7 +1,7 @@
 import { GameClient, LocationClient } from 'pokenode-ts'
 
-import PokemonMapPageClient from '@/map/[region]/pageClient'
-import Location from '@/components/map/Location'
+import PokemonMapPageClient from './pageClient'
+import Location from './Location'
 
 export default async function PokemonMapPage({
   params

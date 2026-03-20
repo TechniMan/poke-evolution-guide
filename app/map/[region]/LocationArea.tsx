@@ -1,5 +1,5 @@
 import { LocationClient } from 'pokenode-ts'
-import LocationAreaClient from '@/components/map/LocationAreaClient'
+import LocationAreaClient from './LocationAreaClient'
 
 const client = new LocationClient()
 

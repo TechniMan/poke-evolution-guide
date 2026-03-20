@@ -1,7 +1,7 @@
 import { LocationClient as PokeLocationClient } from 'pokenode-ts'
 
-import LocationClient from '@/components/map/LocationClient'
-import LocationArea from '@/components/map/LocationArea'
+import LocationClient from './LocationClient'
+import LocationArea from './LocationArea'
 
 export default async function Location({
   locationName

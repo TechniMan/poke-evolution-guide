@@ -1,7 +1,7 @@
 import { GameClient } from 'pokenode-ts'
 
-import PokemonCard from '@/components/list/PokemonCard'
-import PokemonListPageClient from '@/list/[pokedex]/pageClient'
+import PokemonCard from './PokemonCard'
+import PokemonListPageClient from './pageClient'
 
 export default async function PokemonListPage({
   params
