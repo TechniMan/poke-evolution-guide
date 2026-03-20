@@ -1,12 +1,14 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { Region } from 'pokenode-ts'
 
 import Selector from '@/components/basic/Selector'
 import { LocationFilterContext } from '@/contexts/LocationFilterContext'
 import { VersionFilterContext } from '@/contexts/VersionFilterContext'
 import PrettifyName from '@/utils/PrettifyName'
+
+const versionFilterStorageKey = 'mappage-filter-version'
 
 export default function PokemonMapPageClient({
   children,
@@ -17,8 +19,18 @@ export default function PokemonMapPageClient({
   region: Region,
   versionsList: string[]
 }) {
+  const [versionFilter, setVersionFilter] = useState('')
+  function handleVersionSelection(newValue: string) {
+    setVersionFilter(newValue)
+    localStorage.setItem(versionFilterStorageKey, newValue)
+  }
+
+  useEffect(() => {
+    const initialVersion = localStorage.getItem(versionFilterStorageKey) || versionsList[0]
+    setVersionFilter(initialVersion)
+  }, [])
+
   const [selectedLocation, setSelectedLocation] = useState(region.locations[0].name)
-  const [versionFilter, setVersionFilter] = useState(versionsList[0])
 
   return (
     <div
@@ -30,7 +42,8 @@ export default function PokemonMapPageClient({
           label: PrettifyName(v),
           value: v
         }))}
-        setSelection={setVersionFilter}
+        setSelection={handleVersionSelection}
+        initialSelectedValue={versionFilter}
       />
 
       <Selector

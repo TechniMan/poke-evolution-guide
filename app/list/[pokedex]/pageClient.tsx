@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import HideCaughtSwitch from '@/components/filters/HideCaughtSwitch'
 import { Filters, FiltersContext } from '@/contexts/FiltersContext'
 import NameFilterInput from '@/components/filters/NameFilter'
@@ -12,14 +12,18 @@ export default function PokemonListPageClient({
 }: {
   children: React.ReactNode
 }) {
-  const initialFilterState = JSON.parse(
-    localStorage.getItem(filterStorageKey) ||
-    '{"hideCaught":false,"nameFilter":""}'
-  )
-  const [filters, setFilters] = useState<Filters>(initialFilterState)
+  const [filters, setFilters] = useState<Filters>({} as Filters)
   function persistFilterState(filterState: Filters) {
     localStorage.setItem(filterStorageKey, JSON.stringify(filterState))
   }
+
+  useEffect(() => {
+    const initialFilterState = JSON.parse(
+      localStorage.getItem(filterStorageKey) ||
+      '{"hideCaught":false,"nameFilter":""}'
+    )
+    setFilters(initialFilterState)
+  }, [])
 
   function setHideCaught() {
     const newState = Object.assign({

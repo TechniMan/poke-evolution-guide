@@ -10,11 +10,13 @@ export type SelectorOption = {
 export default function Selector({
   label,
   options,
-  setSelection
+  setSelection,
+  initialSelectedValue
 }: {
   label: string,
   options: SelectorOption[],
-  setSelection: (newValue: string) => void
+  setSelection: (newValue: string) => void,
+  initialSelectedValue?: string
 }) {
   const id = `${label.toLowerCase().replaceAll(' ', '-')}-selector`
 
@@ -42,6 +44,7 @@ export default function Selector({
           <option
             key={idx}
             value={option.value}
+            selected={option.value === initialSelectedValue}
           >
             {option.label}
           </option>
