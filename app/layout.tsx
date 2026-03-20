@@ -1,9 +1,12 @@
 import type { Metadata } from 'next'
-import './globals.css'
+import '@/globals.css'
 
-import Anchor from '@/app/ui/basic/Anchor'
-import type { NavMenuItem } from './ui/basic/NavMenu'
-import NavMenu from './ui/basic/NavMenu'
+import Anchor from '@/components/basic/Anchor'
+import type { NavMenuItem } from '@/components/basic/NavMenu'
+import NavMenu from '@/components/basic/NavMenu'
+import Link from 'next/link'
+import { LocationClient } from 'pokenode-ts'
+import PrettifyName from './utils/PrettifyName'
 
 
 export const metadata: Metadata = {
@@ -11,42 +14,49 @@ export const metadata: Metadata = {
   description: 'Uncover the mysteries of Pokemon evolution'
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const navList: NavMenuItem[] = [{
-    link: '/',
-    label: 'Home'
+  const locationClient = new LocationClient()
+
+  // list of pokedexes: https://pokeapi.co/api/v2/pokedex/
+  const listNavItems: NavMenuItem[] = [{
+    label: 'Red/Green/Blue/Yellow',
+    link: '/list/kanto'
   }, {
-    link: '/list/kanto',
-    label: 'FireRed/LeafGreen'
+    label: 'Gold/Silver/Crystal',
+    link: '/list/original-johto'
   }, {
-    link: '/list/original-johto',
-    label: 'Gold/Silver/Crystal'
+    label: 'Ruby/Sapphire/Emerald',
+    link: '/list/hoenn'
   }, {
-    link: '/list/hoenn',
-    label: 'Ruby/Sapphire/Emerald'
+    label: 'Diamond/Pearl',
+    link: '/list/original-sinnoh'
   }, {
-    link: '/list/original-sinnoh',
-    label: 'Diamond/Pearl'
+    label: 'Platinum',
+    link: '/list/extended-sinnoh'
   }, {
-    link: '/list/extended-sinnoh',
-    label: 'Platinum'
+    label: 'HeartGold/SoulSilver',
+    link: '/list/updated-johto'
   }, {
-    link: '/list/updated-johto',
-    label: 'HeartGold/SoulSilver'
+    label: 'OmegaRuby/AlphaSapphire',
+    link: '/list/updated-hoenn'
   }, {
-    link: '/list/updated-hoenn',
-    label: 'OmegaRuby/AlphaSapphire'
+    label: "Let's Go, Pikachu/Eevee!",
+    link: '/list/letsgo-kanto'
   }, {
-    link: '/list/letsgo-kanto',
-    label: "Let's Go Pikachu/Eevee"
-  }, {
-    link: '/list/hisui',
-    label: 'Legends: Arceus'
+    label: 'Legends: Arceus',
+    link: '/list/hisui'
   }]
+  // list of regions: https://pokeapi.co/api/v2/region/
+  const mapNavItems = (await locationClient.listRegions())
+    .results
+    .map(region => ({
+      label: PrettifyName(region.name),
+      link: `/map/${region.name}`
+    } as NavMenuItem))
 
   return (
     <html lang='en'>
@@ -58,10 +68,50 @@ export default function RootLayout({
             <h1>Pokemon Evolution Guide</h1>
           </header>
 
-          <nav className='w-full bg-slate-950 p-2'>
+          <nav className='
+            bg-slate-950
+            content-start
+            gap-2
+            grid
+            grid-cols-1
+            sm:grid-cols-[auto_auto_auto_1fr]
+            grid-rows-[auto_auto_auto]
+            sm:grid-rows-1
+            items-start
+            justify-self-start
+            justify-start
+            justify-items-start
+            p-2
+            self-start
+            w-full
+          '>
+            {/* Home page link */}
+            <Link
+              className='
+                bg-slate-900
+                hover:bg-slate-800
+                duration-50
+                m-auto
+                px-2
+                py-1
+                rounded-md
+                text-blue-500
+                transition
+              '
+              href='/'
+            >
+              Home page
+            </Link>
+
+            {/* Nav menu for Pokedex lists */}
             <NavMenu
-              items={navList}
-              menuLabel='Choose a Pokedex'
+              items={listNavItems}
+              menuLabel='Game Pokedex list'
+            />
+            {/* Nav menu for encounter lists */}
+            <NavMenu
+              items={mapNavItems}
+              menuLabel='Region encounter list'
             />
           </nav>
 

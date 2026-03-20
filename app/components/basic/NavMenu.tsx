@@ -39,6 +39,7 @@ export default function NavMenu({
       <div
         className='
           bg-slate-600
+          hover:bg-slate-500
           cursor-pointer
           m-auto
           sm:m-0
@@ -60,16 +61,16 @@ export default function NavMenu({
           flex
           flex-col
           gap-1
-          ${isMenuOpen ? 'block' : 'hidden'}
-          ${isMenuOpen ? 'outline-1' : 'outline-0'}
+          mt-1
           outline-slate-600
-          overflow-hidden
+          overflow-y-scroll
           rounded-md
           transition
           transition-discrete
-          w-auto
-          sm:w-auto
+          pokenavwidth
           z-100
+          ${isMenuOpen ? 'block' : 'hidden'}
+          ${isMenuOpen ? 'outline-1' : 'outline-0'}
         `}
       >
         {items.map((item, idx) => (

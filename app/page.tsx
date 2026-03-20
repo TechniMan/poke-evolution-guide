@@ -1,5 +1,5 @@
-import Paragraph from '@/app/ui/basic/Paragraph'
-import UnorderedList from './ui/basic/UnorderedList'
+import Paragraph from '@/components/basic/Paragraph'
+import UnorderedList from '@/components/basic/UnorderedList'
 
 export default async function HomePage() {
   const featuresList = [

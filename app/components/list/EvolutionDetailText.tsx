@@ -1,7 +1,7 @@
 'use client'
 
 import type { EvolutionDetail } from 'pokenode-ts'
-import PrettifyName from '../utils/PrettifyName'
+import PrettifyName from '@/utils/PrettifyName'
 
 function EvolutionInfo(evDetail: EvolutionDetail): {
   trigger: string,

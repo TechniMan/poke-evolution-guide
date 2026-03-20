@@ -1,9 +1,9 @@
 'use client'
 
 import { useState } from 'react'
-import HideCaughtSwitch from '@/app/ui/filters/HideCaughtSwitch'
-import { Filters, FiltersContext } from '@/app/contexts/FiltersContext'
-import NameFilterInput from '@/app/ui/filters/NameFilter'
+import HideCaughtSwitch from '@/components/filters/HideCaughtSwitch'
+import { Filters, FiltersContext } from '@/contexts/FiltersContext'
+import NameFilterInput from '@/components/filters/NameFilter'
 
 const filterStorageKey = 'listpage-filters'
 

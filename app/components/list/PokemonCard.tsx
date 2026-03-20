@@ -1,7 +1,7 @@
 import { EvolutionClient, PokemonClient } from 'pokenode-ts'
 import type { ChainLink, EvolutionDetail, Pokedex, Pokemon, PokemonSpecies } from 'pokenode-ts'
 
-import PokemonCardClient from './PokemonCardClient'
+import PokemonCardClient from '@/components/list/PokemonCardClient'
 
 const evolutionClient = new EvolutionClient()
 const pokemonClient = new PokemonClient()

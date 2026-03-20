@@ -3,9 +3,9 @@
 import { useContext, useState } from 'react'
 import type { EvolutionDetail } from 'pokenode-ts'
 
-import PrettifyName from '@/app/utils/PrettifyName'
-import EvolutionDetailText from '@/app/ui/EvolutionDetailText'
-import { FiltersContext } from '@/app/contexts/FiltersContext'
+import PrettifyName from '@/utils/PrettifyName'
+import EvolutionDetailText from '@/components/EvolutionDetailText'
+import { FiltersContext } from '@/contexts/FiltersContext'
 
 export default function PokemonCardClient({
   sprite,
