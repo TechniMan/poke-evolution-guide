@@ -1,5 +1,6 @@
 import Paragraph from '@/components/basic/Paragraph'
 import UnorderedList from '@/components/basic/UnorderedList'
+import Anchor from '@/components/basic/Anchor'
 
 export default async function HomePage() {
   const featuresList = [
@@ -31,6 +32,13 @@ export default async function HomePage() {
       <UnorderedList
         items={plannedList}
       />
+
+      <footer className='w-full bg-slate-950 p-2 text-center'>
+        Made by&nbsp;
+        <Anchor href='https://willthomas.dev/'>Will Thomas</Anchor> |&nbsp;
+        <Anchor href='https://github.com/techniman/poke-evolution-guide/'>GitHub</Anchor> |
+        Using <Anchor href='https://pokeapi.co'>PokeAPI</Anchor> via <Anchor href='https://pokenode-ts.vercel.app/'>pokenode-ts</Anchor>
+      </footer>
     </div>
   )
 }

@@ -46,7 +46,7 @@ export default function PokemonListPageClient({
   }
 
   return (
-    <div>
+    <div className='grid grid-cols-1 grid-rows-[auto_1fr] h-full'>
       <div className='
         bg-slate-950
         flex
@@ -75,8 +75,7 @@ export default function PokemonListPageClient({
         />
       </div>
 
-      <div className='flex flex-wrap gap-4 sm:gap-6 p-4 justify-center'>
-
+      <div className='flex flex-wrap gap-4 sm:gap-6 p-4 justify-center overflow-y-auto'>
         <FiltersContext value={filters}>
           {children}
         </FiltersContext>

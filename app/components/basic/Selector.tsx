@@ -39,12 +39,12 @@ export default function Selector({
         className='bg-slate-800 p-2 rounded-md'
         id={id}
         onChange={handleSelection}
+        value={initialSelectedValue}
       >
         {options.map((option, idx) => (
           <option
             key={idx}
             value={option.value}
-            selected={option.value === initialSelectedValue}
           >
             {option.label}
           </option>

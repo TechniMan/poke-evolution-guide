@@ -1,6 +1,6 @@
 'use client'
 
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import type { EvolutionDetail } from 'pokenode-ts'
 
 import PrettifyName from '@/utils/PrettifyName'
@@ -25,19 +25,23 @@ export default function PokemonCardClient({
   evolutionDetails: EvolutionDetail[]
 }) {
   const storageKey: string = `${pokedexName}-${speciesName}`
-  const initialIsCaught = localStorage.getItem(storageKey) === 'true'
-  const [isCaught, setIsCaught] = useState(initialIsCaught)
+
+  const [isCaught, setIsCaught] = useState(false)
+  useEffect(() => {
+    const initialIsCaught = localStorage.getItem(storageKey) === 'true'
+    setIsCaught(initialIsCaught)
+  }, [])
   function toggleCaught() {
     localStorage.setItem(storageKey, `${!isCaught}`)
     setIsCaught(!isCaught)
   }
-  const filters = useContext(FiltersContext)
 
   const prettySpecies = PrettifyName(speciesName)
   const prettyEvolvesFrom = PrettifyName(evolvesFromName)
   const evolutionItemLowercaseArr = evolutionDetails.filter(ed => ed.item?.name).map(ed => PrettifyName(ed.item!.name).toLowerCase())
 
-  const filterLower = filters.nameFilter.toLowerCase()
+  const filters = useContext(FiltersContext)
+  const filterLower = filters.nameFilter?.toLowerCase() || ''
 
   // hide this card if:
   const filteredOut =

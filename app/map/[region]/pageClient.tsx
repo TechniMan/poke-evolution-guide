@@ -34,8 +34,9 @@ export default function PokemonMapPageClient({
 
   return (
     <div
-      className='p-4 pt-2 w-full'
+      className='p-4 pt-2 w-full grid grid-cols-1 grid-rows-[auto_1fr] h-full'
     >
+      <div>
       <Selector
         label='Version:'
         options={versionsList.map(v => ({
@@ -54,12 +55,15 @@ export default function PokemonMapPageClient({
         }))}
         setSelection={setSelectedLocation}
       />
+      </div>
 
+      <div className='overflow-y-auto'>
       <LocationFilterContext value={selectedLocation}>
         <VersionFilterContext value={versionFilter}>
           {children}
         </VersionFilterContext>
       </LocationFilterContext>
+      </div>
     </div>
   )
 }
